@@ -1,10 +1,11 @@
 import {inject, injectable} from 'inversify'
 import * as AuthenticationRepository from './AuthenticationRepository'
 import * as Router from '../Routing/Router'
-import {makeObservable, observable} from 'mobx'
+import {action, makeObservable, observable} from 'mobx'
 import {Types} from "../Core/Types";
 import {RouteIds} from "../Routing/Routes";
 import {AuthenticationRepositoryI} from "./AuthenticationRepository";
+import {MessagesPresenter} from "../Core/Messages/MessagesPresenter";
 
 export interface LoginRegisterPresenterI {
   email: string;
@@ -18,7 +19,7 @@ export interface LoginRegisterPresenterI {
 }
 
 @injectable()
-export class LoginRegisterPresenter implements LoginRegisterPresenterI {
+export class LoginRegisterPresenter implements LoginRegisterPresenterI extends MessagesPresenter  {
 
   authenticationRepository: AuthenticationRepository.AuthenticationRepositoryI;
   router: Router.RouterI;
@@ -42,19 +43,40 @@ export class LoginRegisterPresenter implements LoginRegisterPresenterI {
       option: observable,
       showValidationMessage: observable,
       validationMessage: observable
+      reset: action,
+      login: action,
+      register: action,
+      logOut: action
     })
+    //todo MessagesPresenter
+    this.init()
   }
 
-  logout:LoginRegisterPresenterI["logout"] = async () => {
-    this.router.goToId(RouteIds.Login)
+  reset = () => {
+    this.email = ''
+    this.password = ''
+    this.option = 'login'
   }
 
   login:LoginRegisterPresenterI["login"] = async () => {
-    console.log(this)
-    this.router.goToId(RouteIds.Home)
+    let loginPm = await this.authenticationRepository.login(this.email, this.password)
+//todo MessagesPresenter
+    this.unpackRepositoryPmToVm(loginPm, 'User logged in')
+
+    if (loginPm.success) {
+      this.router.goToId(RouteIds.Home)
+    }
+
   }
 
   register:LoginRegisterPresenterI["register"] = async () => {
-    console.log(this)
+    let registerPm = await this.authenticationRepository.register(this.email, this.password)
+    //todo MessagesPresenter
+    // this.unpackRepositoryPmToVm(registerPm, 'User registered')
+  }
+
+  logout:LoginRegisterPresenterI["logout"] = async () => {
+    this.authenticationRepository.logOut()
+    this.router.goToId(RouteIds.Login)
   }
 }

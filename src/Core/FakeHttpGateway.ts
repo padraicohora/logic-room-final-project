@@ -8,8 +8,8 @@ class FakeHttpGateway implements FakeHttpGatewayI{
   get:FakeHttpGatewayI["get"] = async (path) => {}
 
   post:FakeHttpGatewayI["post"] = async (path, requestDto) => {
-    console.log('got here')
   }
+  delete = async (path) => {}
 }
 
 export {FakeHttpGateway}

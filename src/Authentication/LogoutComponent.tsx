@@ -1,15 +1,16 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import {useInjection} from '../Core/WithPresenter'
-import { AuthenticationRepositoryI} from './AuthenticationRepository'
+import { LoginRegisterPresenter } from '../Authentication/LoginRegisterPresenter'
+
 import {Types} from "../Core/Types";
 
 export const LogoutComponent = observer(() => {
-    const AuthenticationRepository = useInjection<AuthenticationRepositoryI>(Types.AuthenticationRepository)
+    const ViewModel = useInjection<LoginRegisterPresenter>(Types.AuthenticationRepository)
   return (
     <div
       onClick={() => {
-          AuthenticationRepository.logout()
+          ViewModel.logout()
       }}
       className="navigation-item"
       style={{ backgroundColor: '#5BCA06' }}
