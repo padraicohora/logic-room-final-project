@@ -3,7 +3,7 @@ import {RoutingState} from "../Routing/RoutingState";
 import {RouteUpdater} from "../Routing/RouteUpdater";
 import {RouteRegistrar} from "../Routing/RouteRegistrar";
 import {Config} from "./Config";
-import {Router} from "../Routing/Router";
+import {OLD_Router} from "../Routing/Router";
 import {NavigationTree} from "../Navigation/NavigationTree";
 import {NavigationPresenter} from "../Navigation/NavigationPresenter";
 import {FakeHttpGateway} from "./FakeHttpGateway";

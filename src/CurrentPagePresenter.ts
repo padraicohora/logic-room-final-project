@@ -19,7 +19,7 @@ class CurrentPagePresenter implements CurrentPagePresenterI {
   loading: boolean;
   routingState: RoutingState
 
-  constructor(@inject(Router.Router) router: Router.RouterI, @inject(Types.RoutingState) routingState:RoutingState) {
+  constructor(@inject(Router.OLD_Router) router: Router.RouterI, @inject(Types.RoutingState) routingState:RoutingState) {
     this.router = router;
     this.routingState = routingState
     makeObservable(this, {

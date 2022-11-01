@@ -1,7 +1,7 @@
 import { Types } from '../Core/Types'
 //todo AppTestHarness
 // import { AppTestHarness } from '../TestTools/AppTestHarness'
-import { Router } from '../Routing/Router'
+import { OLD_Router } from '../Routing/Router'
 //todo RouterRepository
 // import { RouterRepository } from '../Routing/RouterRepository'
 
@@ -15,7 +15,7 @@ describe('init', () => {
   beforeEach(() => {
     appTestHarness = new AppTestHarness()
     appTestHarness.init()
-    router = appTestHarness.container.get(Router)
+    router = appTestHarness.container.get(OLD_Router)
     routerRepository = appTestHarness.container.get(RouterRepository)
     routerGateway = appTestHarness.container.get(Types.IRouterGateway)
     onRouteChange = () => {}

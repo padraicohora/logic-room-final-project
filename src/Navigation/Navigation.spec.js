@@ -1,17 +1,35 @@
 import { NavigationPresenter } from './NavigationPresenter'
-import { Router } from '../Routing/Router'
-import { RoutingState } from '../Routing/RoutingState'
+import { OLD_Router } from '../Routing/Router'
 import { Types } from '../Core/Types'
+import { AppTestHarness } from '../TestTools/AppTestHarness'
+import { GetSuccessfulRegistrationStub } from '../TestTools/GetSuccessfulRegistrationStub'
 
-beforeEach(() => {})
+let appTestHarness = null
+let navigationPresenter = null
+let router = null
+let routerGateway = null
 
-/// navigation path ///
-/// home
-/// ----> booksLink
-/// ---------------> home (skips out the expandable nodes)
-///
-it('should navigate back to root from anywhere', () => {
-  // anchor - check the naviationPresenter
-  // click - the correct menu item (remember to pivot the routingState.currentState.routeId)
-  // back - navigationPresenter.backToTop()
+describe('navigation', () => {
+    beforeEach(async () => {
+        appTestHarness = new AppTestHarness()
+        appTestHarness.init()
+        appTestHarness.bootStrap(() => {})
+        navigationPresenter = appTestHarness.container.get(NavigationPresenter)
+        router = appTestHarness.container.get(OLD_Router)
+        routerGateway = appTestHarness.container.get(Types.IRouterGateway)
+    })
+
+    describe('before login', () => {
+        it('anchor default state', () => {
+            expect(navigationPresenter.viewModel.currentSelectedVisibleName).toBe('')
+            expect(navigationPresenter.viewModel.showBack).toBe(false)
+            expect(navigationPresenter.viewModel.menuItems).toEqual([])
+        })
+    })
+
+    describe('login', () => {
+        beforeEach(async () => {
+            await appTestHarness.setupLogin(GetSuccessfulRegistrationStub, 'login')
+        })
+    })
 })

@@ -1,7 +1,7 @@
 import { Container } from 'inversify'
 import {RouterGateway, RouterGatewayI} from './Routing/RouterGateway'
 import {HttpGateway, HttpGatewayI} from './Core/HttpGateway'
-import {Router, RouterI} from './Routing/Router'
+import {OLD_Router, RouterI} from './Routing/Router'
 import {RoutingState, RoutingStateI} from './Routing/RoutingState'
 import { Types } from './Core/Types'
 import {CurrentPagePresenter, CurrentPagePresenterI} from "./CurrentPagePresenter";
@@ -30,7 +30,7 @@ container.bind<RoutingStateI>(Types.RoutingState).to(RoutingState).inSingletonSc
 container.bind<RouteUpdaterI>(Types.RouteUpdater).to(RouteUpdater)
 container.bind<RouteRegistrarI>(Types.RouteRegistrar).to(RouteRegistrar)
 container.bind<ConfigI>(Types.Config).to(Config)
-container.bind<RouterI>(Types.Router).to(Router).inSingletonScope()
+container.bind<RouterI>(Types.Router).to(OLD_Router).inSingletonScope()
 container.bind<FakeRouterGatewayI>(Types.FakeRouterGateway).to(FakeRouterGateway).inSingletonScope()
 container.bind<NavigationTreeI>(Types.NavigationTree).to(NavigationTree)
 container.bind<NavigationPresenterI>(Types.NavigationPresenter).to(NavigationPresenter)

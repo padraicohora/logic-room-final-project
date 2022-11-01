@@ -6,25 +6,29 @@ import * as RoutingState from './RoutingState'
 import {Types} from '../Core/Types'
 import {makeObservable, computed} from 'mobx'
 import * as RouterGateway from "./RouterGateway";
-
+import { UserModel } from '../Authentication/UserModel'
 export interface RouterI {
     goToId: (routeId: Routes.RouteIds, params?: Routes.Params, query?: Routes.Query) => void;
     registerRoutes: () => void;
     currentRouteId: Routes.RouteIds;
+    userModel;
 }
 
 @injectable()
-class Router implements RouterI {
+class OLD_Router implements RouterI {
     routeRegistrar: RouteRegistrar.RouteRegistrarI
     routeUpdater: RouteUpdater.RouteUpdaterI
     routes: Routes.RoutesI
     routerGateway: RouterGateway.RouterGatewayI
     routingState: RoutingState.RoutingStateI
 
+    // userModel;
     constructor(@inject(Types.RouteRegistrar) routeRegistrar: RouteRegistrar.RouteRegistrarI,
                 @inject(Types.RouteUpdater) routeUpdater: RouteUpdater.RouteUpdaterI,
                 @inject(Types.Routes) routes: Routes.RoutesI,
                 @inject(Types.IRouterGateway) routerGateway: RouterGateway.RouterGatewayI,
+                //todo userModel
+                // @inject(UserModel) userModel: RouterGateway.RouterGatewayI,
                 @inject(Types.RoutingState) routingState: RoutingState.RoutingStateI) {
         this.routeRegistrar = routeRegistrar
         this.routeUpdater = routeUpdater
@@ -56,4 +60,4 @@ class Router implements RouterI {
         this.routerGateway.goToPath(path)
   }
 }
-export {Router}
+export {OLD_Router}
